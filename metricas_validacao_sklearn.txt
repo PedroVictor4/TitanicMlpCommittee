@@ -1,0 +1,23 @@
+Relatório de Validação - SKLEARN
+
+--- decisorio_sklearn_validacao ---
+Acurácia:  0.84831
+F1-Score:  0.81379
+Precisão:  0.86765
+Recall:    0.76623
+MCC:       0.69044
+Matriz de Confusão (Texto):
+[[92  9]
+ [18 59]]
+
+--- soma_de_probabilidades_sklearn_validacao ---
+Acurácia:  0.84270
+F1-Score:  0.80822
+Precisão:  0.85507
+Recall:    0.76623
+MCC:       0.67848
+Matriz de Confusão (Texto):
+[[91 10]
+ [18 59]]
+
+>> VENCEDOR: Decisório (Majority)

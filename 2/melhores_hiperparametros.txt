@@ -1,0 +1,7 @@
+
+=== MELHORES HIPERPARÂMETROS: SKLEARN ===
+Indivíduo 1: {'layers': 2, 'neurons1': 64, 'neurons2': 16, 'batch_size': 64, 'epochs': 200, 'alpha': 0, 'activation': 'relu', 'dropout1': 0.0, 'dropout2': 0.2}
+Indivíduo 2: {'layers': 2, 'neurons1': 64, 'neurons2': 64, 'batch_size': 64, 'epochs': 200, 'alpha': 0, 'activation': 'relu', 'dropout1': 0.5, 'dropout2': 0.4}
+Indivíduo 3: {'layers': 2, 'neurons1': 64, 'neurons2': 16, 'batch_size': 32, 'epochs': 50, 'alpha': 0, 'activation': 'relu', 'dropout1': 0.4, 'dropout2': 0.4}
+Indivíduo 4: {'layers': 2, 'neurons1': 256, 'neurons2': 64, 'batch_size': 16, 'epochs': 200, 'alpha': 0, 'activation': 'relu', 'dropout1': 0.5, 'dropout2': 0.2}
+Indivíduo 5: {'layers': 2, 'neurons1': 256, 'neurons2': 64, 'batch_size': 16, 'epochs': 100, 'alpha': 0, 'activation': 'relu', 'dropout1': 0.4, 'dropout2': 0.4}

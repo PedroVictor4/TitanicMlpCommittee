@@ -1,0 +1,23 @@
+Relatório de Validação - SKLEARN
+
+--- decisorio_sklearn_validacao ---
+Acurácia:  0.79775
+F1-Score:  0.72727
+Precisão:  0.76190
+Recall:    0.69565
+MCC:       0.56857
+Matriz de Confusão (Texto):
+[[94 15]
+ [21 48]]
+
+--- soma_de_probabilidades_sklearn_validacao ---
+Acurácia:  0.79775
+F1-Score:  0.72727
+Precisão:  0.76190
+Recall:    0.69565
+MCC:       0.56857
+Matriz de Confusão (Texto):
+[[94 15]
+ [21 48]]
+
+>> VENCEDOR: Soma de Probabilidades (Aggregation)

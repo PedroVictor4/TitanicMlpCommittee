@@ -11,13 +11,15 @@ import generateModel
 # Resumindo: Já que o Keras permite o uso de Dropout, vantagem para o Keras
 param_space = {
     'layers':     [1, 2],              # número de camadas escondidas
-    'neurons1':   [32, 64, 128, 256],  # neurônios na 1ª camada 
-    'neurons2':   [16, 32, 64, 128],   # neurônios na 2ª camada (se houver)
-    'dropout1':   [0.0, 0.2, 0.4, 0.5], # taxa de dropout na 1ª camada
-    'dropout2':   [0.0, 0.2, 0.4, 0.5], # taxa de dropout na 2ª camada
-    'batch_size': [16, 32],            # tamanho do lote
-    'epochs':     [50, 100, 150],      # número de épocas
-    'alpha':      [0.0, 0.001, 0.01, 0.05], # Regularização L2 
+    'neurons1':   [16, 32, 64, 128, 256],  # neurônios na 1ª camada 
+    'neurons2':   [16, 32, 64, 128, 256],   # neurônios na 2ª camada (se houver)
+    # O dropout foi removido do espaço de busca pois estava piorando a performance dos modelos
+    # Pelo o que eu conversei com o Saraiva, ele é mais usado em redes maiores e mais complexas
+    #'dropout1':   [0.0, 0.2, 0.4, 0.5], # taxa de dropout na 1ª camada
+    #'dropout2':   [0.0, 0.2, 0.4, 0.5], # taxa de dropout na 2ª camada
+    'batch_size': [16, 32, 64],            # tamanho do lote
+    'epochs':     [50, 100, 200],      # número de épocas
+    'alpha':      [0.0001, 0.001, 0.01, 0.05, 0.1], # Regularização L2 
     'activation': ['relu', 'tanh']     # Funções de ativação 
 }
 param_keys = list(param_space.keys())
@@ -87,6 +89,7 @@ def genetic_algorithm(X, y, generations=10, pop_size=10, n_best=5):
     
     # Seleciona e retorna os N melhores indivíduos ÚNICOS final
     # N é o tamanho do comitê
+    # Pega indivíduos com configurações de hiperparâmetros distintas
     hall_of_fame.sort(key=lambda x: x[1], reverse=True)
     unique_params = []
     seen_configs = set()

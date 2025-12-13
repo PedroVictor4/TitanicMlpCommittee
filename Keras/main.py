@@ -42,8 +42,8 @@ def ensemble_predict(models, X, method='aggregation'):
 
 def train(generations, pop_size):
     # Carrega dados completos
-    X, y, scaler, encoder = preprocess_data(
-        '../dados_originais/train.csv',
+    X, y, scaler, encoders = preprocess_data(
+        '../dados_originais/trainCorrigido.csv',
         fit_scaler=True,
         fit_encoder=True
     )
@@ -102,7 +102,7 @@ def train(generations, pop_size):
     best_method = 'aggregation' if acc_aggregation >= acc_majority else 'majority'
     print(f"\n>> Melhor estratégia escolhida: {best_method.upper()}")
     
-    df_raw_train = pd.read_csv('../dados_originais/train.csv')
+    df_raw_train = pd.read_csv('../dados_originais/trainCorrigido.csv')
     age_median = df_raw_train['Age'].median()
 
     # Salva os objetos de pré-processamento e a config do ensemble
@@ -110,7 +110,7 @@ def train(generations, pop_size):
     with open('preprocessing.pkl', 'wb') as f:
         pickle.dump({
             'scaler': scaler, 
-            'encoder': encoder,
+            'encoders': encoders,
             'age_median': age_median,
             'best_method': best_method,
             'n_members': len(models)
@@ -127,7 +127,7 @@ def test():
     with open('preprocessing.pkl', 'rb') as f:
         prep = pickle.load(f)
     scaler = prep['scaler']
-    encoder = prep['encoder']
+    encoders = prep['encoders']
     best_method = prep.get('best_method', 'aggregation')
     n_members = prep.get('n_members', 5)
     
@@ -165,7 +165,7 @@ def test():
     X_test, _, _, _ = preprocess_data(
         '_tmp_test.csv',
         fit_scaler=False, scaler=scaler,
-        fit_encoder=False, encoder=encoder
+        fit_encoder=False, encoders=encoders
     )
 
     # Predição com Comitê
