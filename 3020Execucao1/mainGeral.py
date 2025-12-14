@@ -31,12 +31,12 @@ TRAIN_PATH = os.path.join(DATA_DIR, 'trainCorrigido.csv')
 TEST_PATH  = os.path.join(DATA_DIR, 'test.csv')
 
 # Parâmetros do Algoritmo Genético
-GENERATIONS = 41     # Número de gerações
-POP_SIZE = 31       # Tamanho da população
+GENERATIONS = 30      # Número de gerações
+POP_SIZE = 20         # Tamanho da população
 N_BEST = 5            # Tamanho do comitê (Top N indivíduos)
 
 # Seed Global para reprodutibilidade
-GLOBAL_SEED = 12030988
+GLOBAL_SEED = 42
 
 # Diretório para salvar imagens das matrizes de confusão
 IMG_DIR = 'matrizes_confusao'
@@ -53,10 +53,8 @@ PARAM_SPACE = {
     'batch_size': [16, 32, 64],            
     'epochs':     [50, 100, 200],
     # Regularização L2 ("Equivalente" ao dropout do Keras ou alpha do Sklearn)
-    #'alpha':      [0.0001, 0.001, 0.01, 0.05, 0.1],
-    'alpha':      [0], 
+    'alpha':      [0.0001, 0.001, 0.01, 0.05, 0.1], 
     'activation': ['relu', 'tanh'],
-    #'activation': ['relu'],
     # Dropout específico para Keras (Sklearn MLP não tem dropout padrão, mas mantivemos a chave para o Keras usar)
     'dropout1':   [0.0, 0.2, 0.4, 0.5], 
     'dropout2':   [0.0, 0.2, 0.4, 0.5]
@@ -95,8 +93,7 @@ def preprocessData(path, fit_scaler=True, scaler=None, fit_encoder=True, encoder
     # Se precisar dessas colunas, elas devem ser tratadas (ex: TF-IDF) antes de entrar no X numérico.
     # Note que usamos 'Deck' aqui, não 'Cabin'.
     # Garantir que todas colunas existam (para o caso do teste)
-    #cols_needed = ['Pclass', 'Sex', 'Age', 'family_size', 'Fare', 'Deck', 'Embarked']
-    cols_needed = ['Pclass', 'Sex', 'Age', 'family_size','Deck']
+    cols_needed = ['Pclass', 'Sex', 'Age', 'family_size', 'Fare', 'Deck', 'Embarked']
     for c in cols_needed:
         if c not in df.columns:
             df[c] = 0 # Valor default seguro
@@ -106,8 +103,7 @@ def preprocessData(path, fit_scaler=True, scaler=None, fit_encoder=True, encoder
     # Inputação básica de Age (Mediana)
     # Idealmente salvaria a mediana do treino, mas para simplificar conforme dataAnalysis.py original:
     X['Age'] = X['Age'].fillna(X['Age'].median())
-    # Isso já foi tratado
-    #X['Fare'] = X['Fare'].fillna(X['Fare'].median()) # Test set as vezes tem Fare nulo
+    X['Fare'] = X['Fare'].fillna(X['Fare'].median()) # Test set as vezes tem Fare nulo
 
     # Inicializa dicionário de encoders se não existir
     if encoders is None:
@@ -121,7 +117,7 @@ def preprocessData(path, fit_scaler=True, scaler=None, fit_encoder=True, encoder
     else:
         # Usa o encoder salvo (safe transform logic)
         X['Sex'] = X['Sex'].apply(lambda s: safeLabelEncodeSingle(s, encoders['Sex']))
-    
+
     # --- Label Encoding DECK ---
     if fit_encoder:
         le_deck = LabelEncoder()
@@ -129,7 +125,7 @@ def preprocessData(path, fit_scaler=True, scaler=None, fit_encoder=True, encoder
         encoders['Deck'] = le_deck
     else:
         X['Deck'] = X['Deck'].apply(lambda s: safeLabelEncodeSingle(s, encoders['Deck']))
-    '''
+
     # --- Label Encoding EMBARKED ---
     if fit_encoder:
         le_emb = LabelEncoder()
@@ -137,7 +133,7 @@ def preprocessData(path, fit_scaler=True, scaler=None, fit_encoder=True, encoder
         encoders['Embarked'] = le_emb
     else:
         X['Embarked'] = X['Embarked'].apply(lambda s: safeLabelEncodeSingle(s, encoders['Embarked']))
-    '''
+
     # Standard Scaling
     if fit_scaler:
         scaler = StandardScaler()
@@ -460,8 +456,7 @@ if __name__ == '__main__':
     # ---------------------------------------------------------
     # LOOP PARA AS DUAS BIBLIOTECAS (KERAS E SKLEARN)
     # ---------------------------------------------------------
-    #backends = ['keras', 'sklearn']
-    backends = ['sklearn']
+    backends = ['keras', 'sklearn']
     
     for backend in backends:
         print(f"\n{'='*40}")

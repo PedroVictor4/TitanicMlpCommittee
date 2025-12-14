@@ -1,0 +1,23 @@
+Relatório de Validação - KERAS
+
+--- decisorio_keras_validacao ---
+Acurácia:  0.80337
+F1-Score:  0.74074
+Precisão:  0.75758
+Recall:    0.72464
+MCC:       0.58287
+Matriz de Confusão (Texto):
+[[93 16]
+ [19 50]]
+
+--- soma_de_probabilidades_keras_validacao ---
+Acurácia:  0.79775
+F1-Score:  0.73529
+Precisão:  0.74627
+Recall:    0.72464
+MCC:       0.57188
+Matriz de Confusão (Texto):
+[[92 17]
+ [19 50]]
+
+>> VENCEDOR: Decisório (Majority)
